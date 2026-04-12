@@ -3,13 +3,20 @@ import { AppModule } from './app.module';
 import { TransformInterceptor } from './common/interceptor/transform.interceptor';
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 import { GlobalExceptionFilter } from './common/filters/global-exception.filter';
+import { LoggerInterceptor } from './common/interceptor/logger.intercptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix('api')
-  app.useGlobalInterceptors(new TransformInterceptor())
+
   app.useGlobalFilters(new GlobalExceptionFilter())
+
+  app.useGlobalInterceptors(
+    new LoggerInterceptor(),
+    new TransformInterceptor()
+  )
+
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,

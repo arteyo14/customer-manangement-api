@@ -12,12 +12,23 @@ export class TransformInterceptor<T> implements NestInterceptor<T, IResponse<T>>
         const response = ctx.getResponse();
         const statusCode = response.statusCode;
 
+
+
         return next.handle().pipe(
-            map((data) => ({
-                status: true,
-                code: statusCode,
-                data
-            }))
-        )
+            map((data) => {
+                const ctx = context.switchToHttp();
+                const response = ctx.getResponse();
+
+                if (response.statusCode >= 400) {
+                    return data;
+                }
+
+                return {
+                    status: true,
+                    code: response.statusCode,
+                    data: data || null,
+                };
+            }),
+        );
     }
 }
