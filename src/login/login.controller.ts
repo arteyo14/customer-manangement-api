@@ -9,6 +9,6 @@ export class LoginController {
     @Post()
     @HttpCode(HttpStatus.OK)
     async login(@Body() request: LoginRequestDto) {
-        return this.loginService.login(request)
+        return await this.loginService.login(request)
     }
 }
