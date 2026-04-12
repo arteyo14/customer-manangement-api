@@ -6,7 +6,7 @@ export type IErrorPayload = {
 
 export interface IPaginationMeta<T = any> {
     total: number;
-    items: T[];
+    items: T;
     page: number;
     limit: number;
     total_pages: number;
