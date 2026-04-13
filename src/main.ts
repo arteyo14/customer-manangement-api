@@ -8,34 +8,37 @@ import { LoggerInterceptor } from './common/interceptor/logger.intercptor';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api')
+  app.setGlobalPrefix('api');
 
-  app.useGlobalFilters(new GlobalExceptionFilter())
+  app.useGlobalFilters(new GlobalExceptionFilter());
 
   app.useGlobalInterceptors(
     new LoggerInterceptor(),
-    new TransformInterceptor()
-  )
+    new TransformInterceptor(),
+  );
 
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-    exceptionFactory: (errors) => {
-      const formattedErrors: Record<string, string> = {};
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      exceptionFactory: (errors) => {
+        const formattedErrors: Record<string, string> = {};
 
-      errors.forEach(err => {
-        formattedErrors[err.property] = err.constraints
-          ? Object.values(err.constraints)[0]
-          : 'Validation failed';
-      });
+        errors.forEach((err) => {
+          formattedErrors[err.property] = err.constraints
+            ? Object.values(err.constraints)[0]
+            : 'Validation failed';
+        });
 
-      return new BadRequestException(formattedErrors);
-    },
-  }));
+        return new BadRequestException(formattedErrors);
+      },
+    }),
+  );
 
   const port = process.env.PORT ?? 8080;
   await app.listen(port);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
+
 bootstrap();
