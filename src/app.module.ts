@@ -12,4 +12,4 @@ import { CustomerService } from './customer/customer.service';
   controllers: [AppController, LoginController],
   providers: [AppService, LoginService, CustomerService],
 })
-export class AppModule { }
+export class AppModule {}

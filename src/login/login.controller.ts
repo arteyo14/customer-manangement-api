@@ -4,11 +4,11 @@ import { LoginRequestDto } from './dto/login.dto';
 
 @Controller('login')
 export class LoginController {
-    constructor(private readonly loginService: LoginService) { }
+  constructor(private readonly loginService: LoginService) {}
 
-    @Post()
-    @HttpCode(HttpStatus.OK)
-    async login(@Body() request: LoginRequestDto) {
-        return await this.loginService.login(request)
-    }
+  @Post()
+  @HttpCode(HttpStatus.OK)
+  login(@Body() request: LoginRequestDto) {
+    return this.loginService.login(request);
+  }
 }
