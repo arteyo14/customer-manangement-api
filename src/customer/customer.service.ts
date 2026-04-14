@@ -25,8 +25,25 @@ export class CustomerService {
         );
       }
 
+      //   if (sort && sort_by) {
+      //     result.sort((a, b) => {
+      //       const key = sort_by as keyof typeof a;
+      //       const aValue = a[key];
+      //       const bValue = b[key];
+      //       if (aValue < bValue) return sort === 'asc' ? -1 : 1;
+      //       if (aValue > bValue) return sort === 'asc' ? 1 : -1;
+      //       return 0;
+      //     });
+      //   }
+
+      const totalItems = result.length;
+      const totalPages = Math.ceil(totalItems / limit);
+
+      const skip = (page - 1) * limit;
+      const paginatedData = result.slice(skip, skip + limit);
+
       if (sort && sort_by) {
-        result.sort((a, b) => {
+        paginatedData.sort((a, b) => {
           const key = sort_by as keyof typeof a;
           const aValue = a[key];
           const bValue = b[key];
@@ -36,12 +53,6 @@ export class CustomerService {
           return 0;
         });
       }
-
-      const totalItems = result.length;
-      const totalPages = Math.ceil(totalItems / limit);
-
-      const skip = (page - 1) * limit;
-      const paginatedData = result.slice(skip, skip + limit);
 
       return {
         total: totalItems,
