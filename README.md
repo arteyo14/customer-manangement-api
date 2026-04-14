@@ -1,9 +1,6 @@
-## ⚙️ 2. Backend: `customer-management-api`
-
-````markdown
 # 🏗️ Customer Management API
 
-ระบบหลังบ้านในรูปแบบ RESTful API พัฒนาด้วย NestJS เพื่อจัดการข้อมูลลูกค้าและระบบยืนยันตัวตนจำลอง
+ระบบหลังบ้านในรูปแบบ RESTful API พัฒนาด้วย NestJS
 
 ## 🛠️ Chosen Stack
 
@@ -12,7 +9,7 @@
 - **Language:** TypeScript
 - **Architecture:** Modular Architecture
 
-## ⚙️ Setup & Run Instructions
+# ⚙️ Setup & Run Instructions
 
 1. ติดตั้ง Dependencies:
    ```bash
@@ -23,4 +20,3 @@
    yarn run start:dev
    ```
 3. API จะพร้อมใช้งานที่ `http://localhost:8080/api`
-````
