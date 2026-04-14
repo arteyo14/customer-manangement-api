@@ -2,7 +2,7 @@
 
 ระบบหลังบ้านในรูปแบบ RESTful API พัฒนาด้วย NestJS
 
-## 🛠️ Chosen Stack
+# 🛠️ Chosen Stack
 
 - **Framework:** NestJS (Node.js)
 - **Package Manager:** Yarn
