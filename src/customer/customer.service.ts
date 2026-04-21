@@ -3,12 +3,13 @@ import { Injectable } from '@nestjs/common';
 
 import data from '../../mock_customer.json';
 import { CustomerListRequestDto } from './dto/customer-request.dto';
+import { CreditStatus, CustomerDetailResponseDto, CustomerListResponseDto, CustomerStatus } from './dto/customer-response.dto';
 
 @Injectable()
 export class CustomerService {
   private readonly logger = new Logger(CustomerService.name);
 
-  getList(query: CustomerListRequestDto) {
+  getList(query: CustomerListRequestDto): CustomerListResponseDto {
     try {
       const { page, limit, search, sort, sort_by } = query;
 
@@ -56,7 +57,22 @@ export class CustomerService {
 
       return {
         total: totalItems,
-        items: paginatedData,
+        items: paginatedData.map(item => ({
+          id: item.id,
+          name: item.name,
+          company: item.company,
+          initials: item.initials,
+          active_since: item.active_since,
+          email: item.email,
+          phone: item.phone,
+          salesperson: item.salesperson,
+          credit_status: item.credit_status as CreditStatus,
+          status: item.status as CustomerStatus,
+          total_spend: item.total_spend,
+          number_of_purchases: item.number_of_purchases,
+          last_activity: item.last_activity,
+          recent_activity: item.recent_activity,
+        })),
         page,
         limit,
         total_pages: totalPages,
@@ -69,14 +85,30 @@ export class CustomerService {
     }
   }
 
-  getDetail(id: number) {
+  getDetail(id: number): CustomerDetailResponseDto {
     try {
       const result = data.find((customer) => customer.id === id);
       if (!result) {
         this.logger.error(`Customer with ID ${id} not found`);
         throw new NotFoundException(`Customer with ID ${id} not found`);
       }
-      return result;
+
+      return {
+        id: result.id,
+        name: result.name,
+        company: result.company,
+        initials: result.initials,
+        active_since: result.active_since,
+        email: result.email,
+        phone: result.phone,
+        salesperson: result.salesperson,
+        credit_status: result.credit_status as CreditStatus,
+        status: result.status as CustomerStatus,
+        total_spend: result.total_spend,
+        number_of_purchases: result.number_of_purchases,
+        last_activity: result.last_activity,
+        recent_activity: result.recent_activity,
+      };
     } catch (error) {
       this.logger.error('Error in getDetail:', error);
       throw new NotFoundException({ message: 'Customer not found' });
