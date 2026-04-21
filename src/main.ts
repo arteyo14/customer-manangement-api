@@ -8,10 +8,14 @@ import { LoggerInterceptor } from './common/interceptor/logger.intercptor';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const frontendUrls = [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL,
+  ].filter(Boolean);
+
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: frontendUrls,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
   });
 
   app.setGlobalPrefix('api');
@@ -42,16 +46,9 @@ async function bootstrap() {
     }),
   );
 
-  const frontendUrl = process.env.FRONTEND_URL || '*';
-  app.enableCors({
-    origin: frontendUrl,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-  })
-
   const port = process.env.PORT || 8080;
-  await app.listen(port);
-  console.log(`Application is running on: http://localhost:${port}/api`);
+  await app.listen(port, '0.0.0.0');
+  console.log(`Application is running on port: ${port}`);
 }
 
 bootstrap();
