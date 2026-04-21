@@ -5,7 +5,7 @@ RESTful API backend developed with NestJS.
 ## 🚀 Live Demo (Deployed Version)
 
 - **API Endpoint:** https://customer-manangement-api-mock.onrender.com/api
-- **Web Application:** https://customer-management-web-uaen.vercel.app/
+- **Web Application:** https://customer-management-web.vercel.app/
 
 *(Note: The API is hosted on a free Render instance, so it may take up to 50 seconds to wake up on the first request.)*
 
