@@ -42,13 +42,14 @@ async function bootstrap() {
     }),
   );
 
+  const frontendUrl = process.env.FRONTEND_URL || '*';
   app.enableCors({
-    origin: "*",
+    origin: frontendUrl,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   })
 
-  const port = 8080;
+  const port = process.env.PORT || 8080;
   await app.listen(port);
   console.log(`Application is running on: http://localhost:${port}/api`);
 }
